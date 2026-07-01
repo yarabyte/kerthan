@@ -1,0 +1,71 @@
+/* ============================================================
+   Clinique Kerthan — Scroll & reveal animations
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Ancres — compensation header sticky + topbar */
+[id] {
+  scroll-margin-top: 7.5rem;
+}
+
+/* Révélation au défilement */
+.kt-reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.kt-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Enfants décalés (grilles de cartes) */
+.kt-reveal--stagger.is-visible > * {
+  animation: kt-reveal-child 0.65s var(--ease-out) backwards;
+  animation-delay: calc(var(--reveal-delay, 0ms) + var(--stagger, 0ms));
+}
+
+@keyframes kt-reveal-child {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.kt-reveal--stagger.is-visible > *:nth-child(1) { --stagger: 0ms; }
+.kt-reveal--stagger.is-visible > *:nth-child(2) { --stagger: 70ms; }
+.kt-reveal--stagger.is-visible > *:nth-child(3) { --stagger: 140ms; }
+.kt-reveal--stagger.is-visible > *:nth-child(4) { --stagger: 210ms; }
+.kt-reveal--stagger.is-visible > *:nth-child(5) { --stagger: 280ms; }
+.kt-reveal--stagger.is-visible > *:nth-child(6) { --stagger: 350ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .kt-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+
+  .kt-reveal--stagger.is-visible > * {
+    animation: none;
+  }
+}

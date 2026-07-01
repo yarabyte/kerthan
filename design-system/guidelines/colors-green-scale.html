@@ -1,0 +1,29 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Green scale" subtitle="Primary foliage green, 50 → 900" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 22px; background: var(--surface-card); font-family: var(--font-body); }
+  .scale { display: flex; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); }
+  .step { flex: 1; height: 72px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; font-size: 10px; font-weight: 600; }
+  .lbl { display: flex; margin-top: 8px; }
+  .lbl div { flex: 1; text-align: center; font-size: 10px; color: var(--text-muted); }
+</style>
+</head>
+<body>
+  <div class="scale">
+    <div class="step" style="background:var(--green-50);color:#1F6B33">50</div>
+    <div class="step" style="background:var(--green-100);color:#1F6B33">100</div>
+    <div class="step" style="background:var(--green-200);color:#1F6B33">200</div>
+    <div class="step" style="background:var(--green-300);color:#0C3318">300</div>
+    <div class="step" style="background:var(--green-400);color:#fff">400</div>
+    <div class="step" style="background:var(--green-500);color:#fff">500</div>
+    <div class="step" style="background:var(--green-600);color:#fff">600</div>
+    <div class="step" style="background:var(--green-700);color:#fff">700</div>
+    <div class="step" style="background:var(--green-800);color:#fff">800</div>
+    <div class="step" style="background:var(--green-900);color:#fff">900</div>
+  </div>
+</body>
+</html>

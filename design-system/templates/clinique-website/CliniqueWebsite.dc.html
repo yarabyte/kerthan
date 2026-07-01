@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Site Clinique Kerthan" description="Page d'accueil complète pour une clinique — en-tête, hero, services, médecine interne et prise de rendez-vous." -->
+<helmet>
+  <script src="./ds-base.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    #kt-page { --maxw: 1200px; }
+    @media (max-width: 880px) {
+      #kt-hero, #kt-about, #kt-imed, #kt-appt { grid-template-columns: 1fr !important; }
+      #kt-imed-cards { grid-template-columns: 1fr 1fr !important; }
+      #kt-services { grid-template-columns: repeat(2, 1fr) !important; }
+      #kt-stats { grid-template-columns: repeat(2, 1fr) !important; }
+      #kt-nav { display: none !important; }
+      #kt-burger { display: inline-flex !important; }
+      header[data-open="true"] #kt-nav {
+        display: flex !important; position: absolute; top: 100%; left: 0; right: 0;
+        flex-direction: column; align-items: stretch; gap: 2px; background: #fff;
+        padding: 10px 16px 16px; border-bottom: 1px solid var(--border-subtle); box-shadow: var(--shadow-md);
+      }
+    }
+    @media (min-width: 881px) { #kt-burger { display: none !important; } }
+    @media (max-width: 560px) {
+      #kt-services { grid-template-columns: 1fr !important; }
+      #kt-footer { grid-template-columns: 1fr 1fr !important; }
+      #kt-topbar-meta { display: none !important; }
+    }
+  </style>
+</helmet>
+
+<div id="kt-page" style="font-family: var(--font-body); color: var(--text-body); background: var(--surface-page);">
+
+  <!-- Top bar -->
+  <div style="background: var(--surface-brand-deep); color: rgba(255,255,255,.82); font-size: 13px;">
+    <div style="max-width: var(--maxw); margin: 0 auto; padding: 9px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+      <div style="display: flex; align-items: center; gap: 22px;">
+        <span style="display: inline-flex; align-items: center; gap: 7px;"><i data-lucide="phone" style="width: 14px; height: 14px; color: var(--gold-300);"></i> Urgences 24/7 : <strong style="color: #fff;">+237 699 41 61 53</strong></span>
+        <span id="kt-topbar-meta" style="display: inline-flex; align-items: center; gap: 7px;"><i data-lucide="map-pin" style="width: 14px; height: 14px; color: var(--gold-300);"></i> 1ère rue Nangah, Bonaberi — Douala</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span id="kt-topbar-meta" style="opacity: .85;">Nous suivre</span>
+        <a href="#" aria-label="Facebook" style="display: inline-flex; width: 28px; height: 28px; align-items: center; justify-content: center; border-radius: 50%; background: rgba(255,255,255,.12); color: #fff;" style-hover="background: var(--gold-500); color: var(--green-900);"><i data-lucide="facebook" style="width: 15px; height: 15px;"></i></a>
+        <a href="#" aria-label="TikTok" style="display: inline-flex; width: 28px; height: 28px; align-items: center; justify-content: center; border-radius: 50%; background: rgba(255,255,255,.12); color: #fff;" style-hover="background: var(--gold-500); color: var(--green-900);"><i data-lucide="music-2" style="width: 15px; height: 15px;"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header data-open="{{ open }}" style="position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border-subtle);">
+    <div style="position: relative; max-width: var(--maxw); margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px;">
+      <a href="#accueil" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+        <img src="../../assets/logo-seal.png" alt="Clinique Kerthan" style="width: 48px; height: 48px; object-fit: contain;" />
+        <span style="display: flex; flex-direction: column; line-height: 1.05;">
+          <span style="font-family: var(--font-display); font-weight: 800; font-size: 18px; color: var(--text-strong);">Clinique Kerthan</span>
+          <span style="font-family: var(--font-accent); font-size: 16px; color: var(--color-cross); font-weight: 700;">We Care · depuis 2004</span>
+        </span>
+      </a>
+      <nav id="kt-nav" style="display: flex; align-items: center; gap: 2px;">
+        <a href="#accueil" onClick="{{ closeNav }}" style="padding: 9px 14px; border-radius: 999px; font-size: 14px; font-weight: 500; color: var(--text-body); text-decoration: none;" style-hover="background: var(--green-50); color: var(--green-700);">Accueil</a>
+        <a href="#histoire" onClick="{{ closeNav }}" style="padding: 9px 14px; border-radius: 999px; font-size: 14px; font-weight: 500; color: var(--text-body); text-decoration: none;" style-hover="background: var(--green-50); color: var(--green-700);">Notre histoire</a>
+        <a href="#services" onClick="{{ closeNav }}" style="padding: 9px 14px; border-radius: 999px; font-size: 14px; font-weight: 500; color: var(--text-body); text-decoration: none;" style-hover="background: var(--green-50); color: var(--green-700);">Services</a>
+        <a href="#interne" onClick="{{ closeNav }}" style="padding: 9px 14px; border-radius: 999px; font-size: 14px; font-weight: 500; color: var(--text-body); text-decoration: none;" style-hover="background: var(--green-50); color: var(--green-700);">Médecine interne</a>
+        <a href="#contact" onClick="{{ closeNav }}" style="padding: 9px 14px; border-radius: 999px; font-size: 14px; font-weight: 500; color: var(--text-body); text-decoration: none;" style-hover="background: var(--green-50); color: var(--green-700);">Contact</a>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.Button" variant="primary" size="sm" href="#contact" hint-size="160px,40px">Rendez-vous</x-import>
+        <button id="kt-burger" onClick="{{ toggleNav }}" aria-label="Menu" style="display: none; width: 42px; height: 42px; align-items: center; justify-content: center; border-radius: 50%; border: 1.5px solid var(--green-300); background: #fff; color: var(--green-700); cursor: pointer;">
+          <i data-lucide="menu" style="width: 20px; height: 20px;"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="accueil" style="position: relative; overflow: hidden; background: linear-gradient(180deg, var(--neutral-50) 0%, #fff 70%);">
+    <div id="kt-hero" style="max-width: var(--maxw); margin: 0 auto; padding: 72px 24px 84px; display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center;">
+      <div>
+        <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.Badge" tone="green" dot="true" hint-size="240px,28px">Clinique privée · Bonaberi, Douala</x-import>
+        <h1 style="font-family: var(--font-display); font-weight: 800; font-size: clamp(36px, 5vw, 60px); line-height: 1.04; letter-spacing: -.02em; color: var(--text-strong); margin: 18px 0 0;">Votre santé, soignée avec <span style="color: var(--color-primary); border-bottom: 4px solid var(--gold-400); padding-bottom: 2px;">compassion</span>.</h1>
+        <p style="font-size: 18px; line-height: 1.6; color: var(--text-muted); max-width: 46ch; margin: 22px 0 0;">Depuis 2004, la Clinique Kerthan offre des soins médicaux de qualité dans un environnement chaleureux et humain — avec professionnalisme, rigueur et humanité.</p>
+        <div style="display: flex; align-items: center; gap: 14px; margin: 24px 0 0; font-family: var(--font-display); font-weight: 700; color: var(--green-700); font-size: 14px; letter-spacing: .04em; text-transform: uppercase;">
+          <span>Accueil</span><span style="color: var(--gold-500);">—</span><span>Confort</span><span style="color: var(--gold-500);">—</span><span>Compétence</span>
+        </div>
+        <div style="display: flex; gap: 14px; margin: 32px 0 0; flex-wrap: wrap;">
+          <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.Button" variant="primary" size="lg" href="#contact" hint-size="220px,52px">Prendre rendez-vous</x-import>
+          <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.Button" variant="secondary" size="lg" href="#services" hint-size="160px,52px">Nos services</x-import>
+        </div>
+      </div>
+      <div style="position: relative;">
+        <div style="background: var(--grad-leaf); border-radius: var(--radius-2xl); padding: 44px 40px 48px; color: #fff; text-align: center; box-shadow: var(--shadow-xl); position: relative; overflow: hidden;">
+          <img src="../../assets/logo-seal.png" alt="Sceau Clinique Kerthan" style="width: 124px; height: 124px; object-fit: contain; margin: 0 auto; display: block; filter: drop-shadow(0 6px 14px rgba(0,0,0,.28));" />
+          <p style="font-family: var(--font-accent); font-weight: 700; font-size: 44px; margin: 16px 0 0; color: #fff; line-height: 1;">We Care</p>
+          <p style="font-size: 14px; color: rgba(255,255,255,.82); margin: 8px 0 0; letter-spacing: .02em;">20 years of compassionate care</p>
+          <img src="../../assets/motif-heartbeat.png" alt="" style="position: absolute; left: 0; right: 0; bottom: 16px; width: 100%; opacity: .22;" />
+        </div>
+        <div style="position: absolute; top: 22px; left: -16px; background: #fff; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); padding: 12px 16px; display: flex; align-items: center; gap: 10px;">
+          <i data-lucide="shield-check" style="width: 20px; height: 20px; color: var(--green-600);"></i>
+          <div style="line-height: 1.2;"><strong style="display: block; font-size: 13px; color: var(--text-strong);">Soins certifiés</strong><span style="font-size: 12px; color: var(--text-muted);">aux standards en vigueur</span></div>
+        </div>
+        <div style="position: absolute; bottom: 18px; right: -14px; background: #fff; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); padding: 12px 16px; display: flex; align-items: center; gap: 10px;">
+          <i data-lucide="clock" style="width: 20px; height: 20px; color: var(--gold-600);"></i>
+          <div style="line-height: 1.2;"><strong style="display: block; font-size: 13px; color: var(--text-strong);">Urgences 24/7</strong><span style="font-size: 12px; color: var(--text-muted);">toujours à votre écoute</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <sc-if value="{{ showStats }}" hint-placeholder-val="{{ true }}">
+    <section style="background: #fff; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);">
+      <div id="kt-stats" style="max-width: 1080px; margin: 0 auto; padding: 36px 24px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+        <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.StatCard" value="20" suffix="ans" label="d'expérience à Douala" align="center" hint-size="160px,96px"></x-import>
+        <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.StatCard" value="6" label="services médicaux" tone="gold" align="center" hint-size="160px,96px"></x-import>
+        <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.StatCard" value="24/7" label="service d'urgences" tone="red" align="center" hint-size="160px,96px"></x-import>
+        <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.StatCard" value="100%" label="approche humaine" align="center" hint-size="160px,96px"></x-import>
+      </div>
+    </section>
+  </sc-if>
+
+  <!-- Services -->
+  <section id="services" style="padding: 84px 24px;">
+    <div style="max-width: var(--maxw); margin: 0 auto;">
+      <div style="display: flex; justify-content: center;">
+        <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.SectionHeading" align="center" eyebrow="Nos services" title="Un plateau technique complet" description="De la médecine générale au laboratoire d'analyses, tous vos soins réunis en un seul lieu." hint-size="600px,140px"></x-import>
+      </div>
+      <div id="kt-services" style="margin-top: 44px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+        <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.ServiceCard" icon="stethoscope" tone="green" title="Médecine générale &amp; spécialités" description="Consultations, diagnostics et suivi médical pour toute la famille." href="#contact" hint-size="100%,210px"></x-import>
+        <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.ServiceCard" icon="heart-pulse" tone="red" title="Médecine interne" description="Prévention et traitement des maladies chroniques et des cas complexes de l'adulte." href="#interne" hint-size="100%,210px"></x-import>
+        <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.ServiceCard" icon="briefcase-medical" tone="gold" title="SMILE — Inter-entreprises" description="Service Médical Inter-entreprise de Liaison et d'Expertise pour les entreprises." href="#contact" hint-size="100%,210px"></x-import>
+        <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.ServiceCard" icon="plane" tone="green" title="CMTH — Voyage &amp; migration" description="Centre for Migration and Travel Health : bilans et vaccins du voyageur." href="#contact" hint-size="100%,210px"></x-import>
+        <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.ServiceCard" icon="scan" tone="gold" title="Imagerie médicale" description="Examens d'imagerie pour un diagnostic précis et rapide." href="#contact" hint-size="100%,210px"></x-import>
+        <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.ServiceCard" icon="microscope" tone="red" title="Laboratoire d'analyses" description="Analyses biologiques fiables, réalisées dans nos propres locaux." href="#contact" hint-size="100%,210px"></x-import>
+      </div>
+    </div>
+  </section>
+
+  <!-- About / history -->
+  <section id="histoire" style="background: var(--green-50); padding: 84px 24px;">
+    <div id="kt-about" style="max-width: var(--maxw); margin: 0 auto; display: grid; grid-template-columns: .9fr 1.1fr; gap: 56px; align-items: center;">
+      <div style="position: relative;">
+        <img src="../../assets/brand-anniversary-card.jpeg" alt="20 ans de la Clinique Kerthan" style="width: 100%; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); display: block;" />
+        <div style="position: absolute; bottom: -18px; right: -16px; background: var(--surface-brand); color: #fff; border-radius: var(--radius-lg); padding: 16px 22px; box-shadow: var(--shadow-lg); text-align: center;">
+          <span style="display: block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-300);">Depuis</span>
+          <strong style="font-family: var(--font-display); font-size: 22px;">Mars 2004</strong>
+        </div>
+      </div>
+      <div>
+        <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.SectionHeading" eyebrow="Notre histoire" title="D'un cabinet médical à une clinique moderne" description="Créée en mars 2004 sous la forme de Cabinet Médical, la Clinique Kerthan n'a cessé d'évoluer pour devenir aujourd'hui un établissement moderne doté d'un plateau technique complet, dans le district de santé de Bonassama." hint-size="100%,180px"></x-import>
+        <ul style="list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 14px;">
+          <li style="display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--text-body);"><span style="display: inline-flex; width: 26px; height: 26px; flex: none; align-items: center; justify-content: center; border-radius: 50%; background: var(--green-500); color: #fff;"><i data-lucide="check" style="width: 15px; height: 15px;"></i></span> Écoute attentive du patient</li>
+          <li style="display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--text-body);"><span style="display: inline-flex; width: 26px; height: 26px; flex: none; align-items: center; justify-content: center; border-radius: 50%; background: var(--green-500); color: #fff;"><i data-lucide="check" style="width: 15px; height: 15px;"></i></span> Explication claire des diagnostics</li>
+          <li style="display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--text-body);"><span style="display: inline-flex; width: 26px; height: 26px; flex: none; align-items: center; justify-content: center; border-radius: 50%; background: var(--green-500); color: #fff;"><i data-lucide="check" style="width: 15px; height: 15px;"></i></span> Prise en charge personnalisée</li>
+          <li style="display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--text-body);"><span style="display: inline-flex; width: 26px; height: 26px; flex: none; align-items: center; justify-content: center; border-radius: 50%; background: var(--green-500); color: #fff;"><i data-lucide="check" style="width: 15px; height: 15px;"></i></span> Coordination des soins spécialisés</li>
+          <li style="display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--text-body);"><span style="display: inline-flex; width: 26px; height: 26px; flex: none; align-items: center; justify-content: center; border-radius: 50%; background: var(--green-500); color: #fff;"><i data-lucide="check" style="width: 15px; height: 15px;"></i></span> Maîtrise des coûts en environnement à ressources limitées</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Internal medicine feature -->
+  <sc-if value="{{ showInternalMed }}" hint-placeholder-val="{{ true }}">
+    <section id="interne" style="background: var(--surface-brand-deep); color: #fff; padding: 84px 24px; position: relative; overflow: hidden;">
+      <div id="kt-imed" style="max-width: var(--maxw); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;">
+        <div>
+          <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.SectionHeading" light="true" eyebrow="Spécialité phare" title="La médecine interne" description="La combinaison de la science et de l'art de soigner. L'interniste, formé pendant au moins 3 années supplémentaires, accompagne l'adulte tout au long de son parcours de santé." hint-size="100%,180px"></x-import>
+          <p style="font-family: var(--font-accent); font-weight: 700; font-size: 34px; color: var(--gold-300); margin: 26px 0 0; line-height: 1;">« Science &amp; art de soigner »</p>
+        </div>
+        <div id="kt-imed-cards" style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
+          <div style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: var(--radius-lg); padding: 22px;">
+            <i data-lucide="activity" style="width: 24px; height: 24px; color: var(--gold-300);"></i>
+            <strong style="display: block; font-family: var(--font-display); font-size: 16px; margin: 12px 0 6px;">Maladies chroniques</strong>
+            <p style="margin: 0; font-size: 14px; line-height: 1.5; color: rgba(255,255,255,.72);">Diabète, hypertension, VIH/SIDA, maladies rhumatismales.</p>
+          </div>
+          <div style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: var(--radius-lg); padding: 22px;">
+            <i data-lucide="layers" style="width: 24px; height: 24px; color: var(--gold-300);"></i>
+            <strong style="display: block; font-family: var(--font-display); font-size: 16px; margin: 12px 0 6px;">Cas complexes</strong>
+            <p style="margin: 0; font-size: 14px; line-height: 1.5; color: rgba(255,255,255,.72);">Prise en charge quand plusieurs maladies coexistent.</p>
+          </div>
+          <div style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: var(--radius-lg); padding: 22px;">
+            <i data-lucide="route" style="width: 24px; height: 24px; color: var(--gold-300);"></i>
+            <strong style="display: block; font-family: var(--font-display); font-size: 16px; margin: 12px 0 6px;">Coordination des soins</strong>
+            <p style="margin: 0; font-size: 14px; line-height: 1.5; color: rgba(255,255,255,.72);">Orientation vers la chirurgie ou les autres spécialistes.</p>
+          </div>
+          <div style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: var(--radius-lg); padding: 22px;">
+            <i data-lucide="graduation-cap" style="width: 24px; height: 24px; color: var(--gold-300);"></i>
+            <strong style="display: block; font-family: var(--font-display); font-size: 16px; margin: 12px 0 6px;">Prévention &amp; éducation</strong>
+            <p style="margin: 0; font-size: 14px; line-height: 1.5; color: rgba(255,255,255,.72);">Comprendre sa santé et se maintenir en bon état.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <!-- Appointment / contact -->
+  <section id="contact" style="padding: 84px 24px;">
+    <div id="kt-appt" style="max-width: var(--maxw); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start;">
+      <div>
+        <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.SectionHeading" eyebrow="Prendre rendez-vous" title="Nous sommes à votre écoute" description="Remplissez le formulaire ou contactez-nous directement. Les urgences restent prioritaires sur les rendez-vous programmés." hint-size="100%,170px"></x-import>
+        <div style="display: grid; gap: 10px; margin: 28px 0 0;">
+          <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.ContactItem" icon="phone" label="Standard" value="+237 699 41 61 53" href="tel:+237699416153" hint-size="100%,48px"></x-import>
+          <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.ContactItem" icon="phone-call" label="Second numéro" value="+237 688 02 08 26" href="tel:+237688020826" tone="gold" hint-size="100%,48px"></x-import>
+          <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.ContactItem" icon="map-pin" label="Adresse" value="1ère rue Nangah N°303, face lycée bilingue de Bonaberi" hint-size="100%,48px"></x-import>
+          <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.ContactItem" icon="globe" label="Site web" value="www.kerthan.org" href="https://www.kerthan.org" hint-size="100%,48px"></x-import>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; margin: 24px 0 0; flex-wrap: wrap;">
+          <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.Badge" tone="green" dot="true" hint-size="160px,28px">Ouvert aujourd'hui</x-import>
+          <span style="font-size: 14px; color: var(--text-muted);">Lun – Sam · 07h30 – 19h00 &nbsp;·&nbsp; Urgences 24h/24</span>
+        </div>
+      </div>
+
+      <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+        <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.Card" hint-size="100%,440px">
+          <form onSubmit="{{ submit }}" style="display: grid; gap: 16px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.Input" label="Nom complet" placeholder="Votre nom" icon="user-round" required="true" hint-size="100%,72px"></x-import>
+              <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.Input" label="Téléphone" type="tel" placeholder="+237 6XX XX XX XX" icon="phone" required="true" hint-size="100%,72px"></x-import>
+            </div>
+            <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.Select" label="Service souhaité" placeholder="Choisir un service" dc-props="{{ serviceSelect }}" hint-size="100%,72px"></x-import>
+            <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.Input" label="Message (optionnel)" multiline="true" placeholder="Décrivez brièvement le motif de votre consultation…" hint-size="100%,110px"></x-import>
+            <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.Checkbox" label="J'accepte d'être recontacté(e) par téléphone ou SMS." defaultChecked="true" hint-size="100%,24px"></x-import>
+            <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.Button" type="submit" variant="primary" size="lg" fullWidth="true" hint-size="100%,52px">Envoyer ma demande</x-import>
+          </form>
+        </x-import>
+      </sc-if>
+      <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+        <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.Card" hint-size="100%,220px">
+          <div style="display: grid; gap: 18px;">
+            <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.Alert" tone="success" title="Demande envoyée" hint-size="100%,90px">Merci ! Notre équipe vous rappellera très vite pour confirmer votre rendez-vous.</x-import>
+            <x-import component-from-global-scope="CliniqueKerthanDesignSystem_0add2c.Button" variant="secondary" onClick="{{ reset }}" hint-size="200px,44px">Nouvelle demande</x-import>
+          </div>
+        </x-import>
+      </sc-if>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="background: var(--surface-brand-deep); color: rgba(255,255,255,.78);">
+    <div id="kt-footer" style="max-width: var(--maxw); margin: 0 auto; padding: 64px 24px 40px; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.2fr; gap: 40px;">
+      <div>
+        <img src="../../assets/logo-seal.png" alt="Clinique Kerthan" style="width: 56px; height: 56px; object-fit: contain;" />
+        <p style="font-family: var(--font-display); font-weight: 800; font-size: 18px; color: #fff; margin: 12px 0 8px;">Clinique Kerthan</p>
+        <p style="font-size: 14px; line-height: 1.6; margin: 0 0 16px;">Établissement de santé privé · Douala IV, Bonassama. Vingt ans de soins prodigués avec compassion.</p>
+        <div style="display: flex; gap: 10px;">
+          <a href="#" aria-label="Facebook" style="display: inline-flex; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); color: #fff;" style-hover="background: var(--gold-500); border-color: var(--gold-500); color: var(--green-900);"><i data-lucide="facebook" style="width: 17px; height: 17px;"></i></a>
+          <a href="#" aria-label="TikTok" style="display: inline-flex; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); color: #fff;" style-hover="background: var(--gold-500); border-color: var(--gold-500); color: var(--green-900);"><i data-lucide="music-2" style="width: 17px; height: 17px;"></i></a>
+          <a href="https://www.kerthan.org" aria-label="Site web" style="display: inline-flex; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); color: #fff;" style-hover="background: var(--gold-500); border-color: var(--gold-500); color: var(--green-900);"><i data-lucide="globe" style="width: 17px; height: 17px;"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-family: var(--font-display); font-size: 15px; color: #fff; margin: 0 0 14px;">Navigation</h4>
+        <div style="display: grid; gap: 9px; font-size: 14px;">
+          <a href="#accueil" style="color: rgba(255,255,255,.78); text-decoration: none;" style-hover="color: var(--gold-300);">Accueil</a>
+          <a href="#histoire" style="color: rgba(255,255,255,.78); text-decoration: none;" style-hover="color: var(--gold-300);">Notre histoire</a>
+          <a href="#services" style="color: rgba(255,255,255,.78); text-decoration: none;" style-hover="color: var(--gold-300);">Services</a>
+          <a href="#interne" style="color: rgba(255,255,255,.78); text-decoration: none;" style-hover="color: var(--gold-300);">Médecine interne</a>
+          <a href="#contact" style="color: rgba(255,255,255,.78); text-decoration: none;" style-hover="color: var(--gold-300);">Contact</a>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-family: var(--font-display); font-size: 15px; color: #fff; margin: 0 0 14px;">Nos services</h4>
+        <div style="display: grid; gap: 9px; font-size: 14px;">
+          <a href="#services" style="color: rgba(255,255,255,.78); text-decoration: none;" style-hover="color: var(--gold-300);">Médecine générale</a>
+          <a href="#interne" style="color: rgba(255,255,255,.78); text-decoration: none;" style-hover="color: var(--gold-300);">Médecine interne</a>
+          <a href="#services" style="color: rgba(255,255,255,.78); text-decoration: none;" style-hover="color: var(--gold-300);">Imagerie médicale</a>
+          <a href="#services" style="color: rgba(255,255,255,.78); text-decoration: none;" style-hover="color: var(--gold-300);">Laboratoire d'analyses</a>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-family: var(--font-display); font-size: 15px; color: #fff; margin: 0 0 14px;">Contact</h4>
+        <div style="display: grid; gap: 10px; font-size: 14px;">
+          <span style="display: flex; align-items: center; gap: 9px;"><i data-lucide="phone" style="width: 15px; height: 15px; color: var(--gold-300);"></i> +237 699 41 61 53</span>
+          <span style="display: flex; align-items: center; gap: 9px;"><i data-lucide="phone" style="width: 15px; height: 15px; color: var(--gold-300);"></i> +237 688 02 08 26</span>
+          <span style="display: flex; align-items: flex-start; gap: 9px;"><i data-lucide="map-pin" style="width: 15px; height: 15px; color: var(--gold-300); margin-top: 2px;"></i> 1ère rue Nangah N°303,<br />Bonaberi — Douala</span>
+          <span style="display: flex; align-items: center; gap: 9px;"><i data-lucide="globe" style="width: 15px; height: 15px; color: var(--gold-300);"></i> www.kerthan.org</span>
+        </div>
+      </div>
+    </div>
+    <div style="border-top: 1px solid rgba(255,255,255,.12);">
+      <div style="max-width: var(--maxw); margin: 0 auto; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 13px;">
+        <span>© {{ year }} Clinique Kerthan — Tous droits réservés.</span>
+        <span style="font-family: var(--font-accent); font-weight: 700; font-size: 20px; color: var(--gold-300);">We Care!</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1200, &quot;height&quot;: 860 },
+  &quot;showStats&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Sections&quot;, &quot;label&quot;: &quot;Bandeau statistiques&quot; },
+  &quot;showInternalMed&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Sections&quot;, &quot;label&quot;: &quot;Section médecine interne&quot; }
+}">
+class Component extends DCLogic {
+  state = { open: false, sent: false };
+
+  componentDidMount() {
+    const render = () => { try { window.lucide && window.lucide.createIcons(); } catch (e) {} };
+    render();
+    let raf = 0;
+    this._obs = new MutationObserver(() => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(render);
+    });
+    this._obs.observe(document.body, { childList: true, subtree: true });
+    // Poll briefly while the Lucide script and DS bundle finish loading.
+    let n = 0;
+    this._iv = setInterval(() => { render(); if (++n > 24) clearInterval(this._iv); }, 280);
+  }
+
+  componentWillUnmount() {
+    if (this._obs) this._obs.disconnect();
+    clearInterval(this._iv);
+  }
+
+  componentDidUpdate() {
+    try { window.lucide && window.lucide.createIcons(); } catch (e) {}
+  }
+
+  renderVals() {
+    const showStats = this.props.showStats ?? true;
+    const showInternalMed = this.props.showInternalMed ?? true;
+    return {
+      open: this.state.open,
+      sent: this.state.sent,
+      notSent: !this.state.sent,
+      showStats,
+      showInternalMed,
+      year: 2026,
+      serviceSelect: {
+        options: [
+          'Médecine générale',
+          'Médecine interne',
+          'Imagerie médicale',
+          "Laboratoire d'analyses",
+          'SMILE — inter-entreprises',
+          'CMTH — santé du voyageur',
+        ],
+      },
+      toggleNav: () => this.setState((s) => ({ open: !s.open })),
+      closeNav: () => this.setState({ open: false }),
+      submit: (e) => { e.preventDefault(); this.setState({ sent: true }); },
+      reset: () => this.setState({ sent: false }),
+    };
+  }
+}
+</script>
+</body>
+</html>

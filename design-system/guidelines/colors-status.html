@@ -1,0 +1,24 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Status colors" subtitle="Success · Info · Warning · Danger" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 22px; background: var(--surface-card); font-family: var(--font-body); }
+  .row { display: flex; gap: 14px; }
+  .item { flex: 1; border-radius: var(--radius-md); padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+  .dot { width: 14px; height: 14px; border-radius: 50%; }
+  .t { font-weight: 600; font-size: 13px; }
+  .c { font-size: 11px; opacity: .8; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="item" style="background:var(--status-success-bg)"><div class="dot" style="background:var(--status-success)"></div><div class="t" style="color:var(--green-800)">Success</div><div class="c" style="color:var(--green-700)">--status-success</div></div>
+    <div class="item" style="background:var(--status-info-bg)"><div class="dot" style="background:var(--status-info)"></div><div class="t" style="color:#1c476b">Info</div><div class="c" style="color:#2E78B5">--status-info</div></div>
+    <div class="item" style="background:var(--status-warning-bg)"><div class="dot" style="background:var(--status-warning)"></div><div class="t" style="color:var(--gold-700)">Warning</div><div class="c" style="color:var(--gold-700)">--status-warning</div></div>
+    <div class="item" style="background:var(--status-danger-bg)"><div class="dot" style="background:var(--status-danger)"></div><div class="t" style="color:var(--red-700)">Danger</div><div class="c" style="color:var(--red-600)">--status-danger</div></div>
+  </div>
+</body>
+</html>

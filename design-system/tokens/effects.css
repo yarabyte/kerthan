@@ -1,0 +1,43 @@
+/* ============================================================
+   Clinique Kerthan — Effects: radii, borders, shadows, motion
+   Cards are soft and reassuring: generous rounding, low-contrast
+   green-tinted shadows, hairline borders. No harsh blacks.
+   ============================================================ */
+:root {
+  /* ---- Corner radii ---- */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 26px;
+  --radius-2xl: 36px;
+  --radius-pill: 999px;
+  --radius-circle: 50%;
+
+  /* ---- Border widths ---- */
+  --border-hair: 1px;
+  --border-thin: 1.5px;
+  --border-thick: 2px;
+
+  /* ---- Shadows (soft, green-tinted, never pure black) ---- */
+  --shadow-xs: 0 1px 2px rgba(20, 77, 37, 0.06);
+  --shadow-sm: 0 2px 6px rgba(20, 77, 37, 0.07);
+  --shadow-md: 0 8px 20px -6px rgba(20, 77, 37, 0.14);
+  --shadow-lg: 0 18px 40px -12px rgba(20, 77, 37, 0.20);
+  --shadow-xl: 0 30px 64px -20px rgba(20, 77, 37, 0.26);
+  --shadow-gold: 0 10px 26px -8px rgba(232, 169, 23, 0.40);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
+  /* ---- Motion ---- */
+  --ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1); /* @kind other */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* @kind other */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* @kind other */
+  --dur-fast: 120ms; /* @kind other */
+  --dur-base: 220ms; /* @kind other */
+  --dur-slow: 380ms; /* @kind other */
+
+  /* ---- Decorative gradients (used sparingly) ---- */
+  --grad-brand: linear-gradient(135deg, var(--green-600) 0%, var(--green-800) 100%);
+  --grad-warm: linear-gradient(120deg, var(--gold-400) 0%, var(--gold-600) 100%);
+  --grad-leaf: linear-gradient(135deg, var(--green-400) 0%, var(--green-700) 90%);
+}

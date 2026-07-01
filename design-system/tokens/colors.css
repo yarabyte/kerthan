@@ -1,0 +1,102 @@
+/* ============================================================
+   Clinique Kerthan — Color tokens
+   Palette anchored to the brand logo: tropical leaf greens,
+   warm gold, and the medical-cross red. Neutrals carry a faint
+   green warmth so the whole UI feels calm and clinical-clean.
+   ============================================================ */
+:root {
+  /* ---- Brand: Green (primary — health, vitality, foliage) ---- */
+  --green-50:  #EAF6EC;
+  --green-100: #D2EBD6;
+  --green-200: #A9D9B1;
+  --green-300: #7BC487;
+  --green-400: #52AE63;
+  --green-500: #3E9B4C;  /* primary brand green */
+  --green-600: #2E8540;  /* hover / pressed */
+  --green-700: #1F6B33;  /* deep green text on light */
+  --green-800: #144D25;
+  --green-900: #0C3318;
+
+  /* ---- Brand: Gold (warmth, hospitality, the "K" mark) ---- */
+  --gold-50:  #FDF6E3;
+  --gold-100: #FBEBC0;
+  --gold-200: #F6DC8E;
+  --gold-300: #F2CD5E;
+  --gold-400: #EDBE3A;
+  --gold-500: #E8A917;  /* primary gold accent */
+  --gold-600: #C98A0E;  /* hover */
+  --gold-700: #9C6A0B;
+  --gold-metal: #B08D2E; /* antique metallic gold of the logo "K" */
+
+  /* ---- Brand: Red (the medical cross, alerts, emphasis) ---- */
+  --red-50:  #FBEAE8;
+  --red-100: #F5CFC9;
+  --red-200: #ECA89E;
+  --red-400: #D45A4C;
+  --red-500: #C0392B;  /* cross red */
+  --red-600: #A82F2F;  /* deep brand red */
+  --red-700: #87241F;
+
+  /* ---- Neutrals (faint green-warm grays) ---- */
+  --neutral-0:   #FFFFFF;
+  --neutral-50:  #F6F8F5;
+  --neutral-100: #EDF1EC;
+  --neutral-200: #DDE4DB;
+  --neutral-300: #C4CEC2;
+  --neutral-400: #9AA79A;
+  --neutral-500: #6E7C6E;
+  --neutral-600: #515E51;
+  --neutral-700: #3A453B;
+  --neutral-800: #232B25;
+  --neutral-900: #141A15;
+
+  /* ---- Semantic status ---- */
+  --status-success: var(--green-500);
+  --status-success-bg: var(--green-50);
+  --status-info: #2E78B5;
+  --status-info-bg: #E6F0F8;
+  --status-warning: var(--gold-600);
+  --status-warning-bg: var(--gold-50);
+  --status-danger: var(--red-500);
+  --status-danger-bg: var(--red-50);
+
+  /* ============================================================
+     Semantic aliases — reference these in components
+     ============================================================ */
+  /* Brand */
+  --color-primary:        var(--green-500);
+  --color-primary-hover:  var(--green-600);
+  --color-primary-active: var(--green-700);
+  --color-primary-soft:   var(--green-50);
+  --color-accent:         var(--gold-500);
+  --color-accent-hover:   var(--gold-600);
+  --color-accent-soft:    var(--gold-50);
+  --color-cross:          var(--red-500);
+  --color-cross-soft:     var(--red-50);
+
+  /* Text */
+  --text-strong:  var(--neutral-900);
+  --text-body:    var(--neutral-700);
+  --text-muted:   var(--neutral-500);
+  --text-faint:   var(--neutral-400);
+  --text-on-brand: #FFFFFF;
+  --text-link:    var(--green-700);
+
+  /* Surfaces */
+  --surface-page:  var(--neutral-50);
+  --surface-card:  var(--neutral-0);
+  --surface-sunken: var(--neutral-100);
+  --surface-brand: var(--green-700);
+  --surface-brand-deep: var(--green-900);
+  --surface-accent: var(--gold-500);
+
+  /* Lines */
+  --border-subtle: var(--neutral-200);
+  --border-default: var(--neutral-300);
+  --border-strong: var(--neutral-400);
+  --border-brand:  var(--green-200);
+
+  /* Focus ring */
+  --ring: 0 0 0 3px rgba(62, 155, 76, 0.35);
+  --ring-gold: 0 0 0 3px rgba(232, 169, 23, 0.35);
+}

@@ -1,0 +1,70 @@
+<!-- @dsCard group="Components" viewport="700x540" name="Core" subtitle="Buttons · icon buttons · badges · avatars · alerts" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; padding: 24px; background: var(--surface-page); font-family: var(--font-body); }
+  .grp { margin-bottom: 20px; }
+  .lab { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); margin: 0 0 10px; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="../../_ds_bundle.js"></script>
+  <script type="text/babel">
+    const { Button, IconButton, Badge, Card, Avatar, Alert, Icon } = window.CliniqueKerthanDesignSystem_0add2c;
+    function Demo() {
+      React.useEffect(() => { window.lucide && window.lucide.createIcons(); });
+      return (
+        <div>
+          <div className="grp">
+            <p className="lab">Buttons</p>
+            <div className="row">
+              <Button variant="primary" leftIcon={<Icon name="calendar-check" size={18} />}>Prendre rendez-vous</Button>
+              <Button variant="gold" leftIcon={<Icon name="phone" size={17} />}>Nous appeler</Button>
+              <Button variant="secondary">En savoir plus</Button>
+              <Button variant="ghost">Annuler</Button>
+              <Button variant="danger" size="sm">Urgence</Button>
+            </div>
+          </div>
+          <div className="grp">
+            <p className="lab">Icon buttons</p>
+            <div className="row">
+              <IconButton icon="phone" variant="solid" label="Appeler" />
+              <IconButton icon="map-pin" variant="gold" label="Itinéraire" />
+              <IconButton icon="facebook" variant="outline" label="Facebook" />
+              <IconButton icon="menu" variant="ghost" label="Menu" />
+            </div>
+          </div>
+          <div className="grp">
+            <p className="lab">Badges & avatars</p>
+            <div className="row">
+              <Badge tone="green" dot>Ouvert 24h/24</Badge>
+              <Badge tone="gold">Nouveau service</Badge>
+              <Badge tone="neutral" leftIcon={<Icon name="clock" size={13} />}>Lun – Sam</Badge>
+              <Badge tone="red">Urgences</Badge>
+              <Avatar name="Awono Marie" size="md" />
+              <Avatar name="Jean Paul" tone="gold" size="md" />
+            </div>
+          </div>
+          <div className="grp">
+            <p className="lab">Alerts</p>
+            <div className="row" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
+              <Alert tone="success" title="Rendez-vous confirmé">Nous vous attendons le 12 juin à 09h00.</Alert>
+              <Alert tone="warning">Les urgences restent prioritaires sur les rendez-vous programmés.</Alert>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+  </script>
+</body>
+</html>

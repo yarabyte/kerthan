@@ -1,0 +1,15 @@
+/* ============================================================
+   Clinique Kerthan — Webfonts
+   ------------------------------------------------------------
+   SUBSTITUTION NOTE: The clinic's printed logo uses decorative
+   display lettering (a blackletter "KERTHAN" and a brush script
+   for "20 years of compassionate care") that are not licensed
+   webfonts. For the digital system we use professional, highly
+   legible Google Fonts that carry the same warm-yet-competent
+   character:
+     • Plus Jakarta Sans — headings / display (friendly geometric)
+     • Lexend           — body / UI (engineered for readability)
+     • Caveat           — handwritten accent for the "We Care" voice
+   Swap these for the licensed brand faces if/when available.
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lexend:wght@300;400;500;600;700&family=Caveat:wght@500;600;700&display=swap');

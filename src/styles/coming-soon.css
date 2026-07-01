@@ -1,0 +1,158 @@
+/* Page maintenance — Coming soon */
+.kt-coming-soon {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--gutter);
+  background: linear-gradient(180deg, var(--neutral-50) 0%, #fff 55%, var(--green-50) 100%);
+  position: relative;
+  overflow: hidden;
+}
+.kt-coming-soon__glow {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(560px, 90vw);
+  height: 320px;
+  background: radial-gradient(ellipse, rgba(62, 155, 76, 0.14) 0%, transparent 70%);
+  pointer-events: none;
+}
+.kt-coming-soon__card {
+  position: relative;
+  z-index: 1;
+  width: min(520px, 100%);
+  text-align: center;
+  background: #fff;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-xl);
+  padding: 40px 32px 36px;
+}
+.kt-coming-soon__logo {
+  width: auto;
+  height: clamp(100px, 22vw, 150px);
+  object-fit: contain;
+  margin: 0 auto;
+  display: block;
+}
+.kt-coming-soon__eyebrow {
+  display: inline-block;
+  margin: 20px 0 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+.kt-coming-soon__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(28px, 5vw, 38px);
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+  margin: 10px 0 0;
+  line-height: 1.1;
+}
+.kt-coming-soon__lead {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 16px auto 0;
+  max-width: 38ch;
+}
+.kt-coming-soon__script {
+  font-family: var(--font-accent);
+  font-weight: 700;
+  font-size: 36px;
+  color: var(--color-cross);
+  margin: 18px 0 0;
+  line-height: 1;
+}
+.kt-coming-soon__motto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin: 16px 0 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green-700);
+}
+.kt-coming-soon__motto i {
+  font-style: normal;
+  color: var(--gold-500);
+}
+.kt-coming-soon__contacts {
+  display: grid;
+  gap: 10px;
+  margin-top: 28px;
+  text-align: left;
+}
+.kt-coming-soon__contact {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: var(--radius-lg);
+  background: var(--neutral-50);
+  border: 1px solid var(--border-subtle);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    border-color var(--dur-base),
+    background var(--dur-base);
+}
+.kt-coming-soon__contact:hover {
+  background: var(--green-50);
+  border-color: var(--green-200);
+}
+.kt-coming-soon__contact strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--text-strong);
+  margin-bottom: 2px;
+}
+.kt-coming-soon__contact span {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+.kt-coming-soon__motif {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 24px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .kt-coming-soon__card {
+    padding: 32px 20px 28px;
+  }
+
+  .kt-coming-soon__script {
+    font-size: 30px;
+  }
+
+  .kt-coming-soon__contact {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 380px) {
+  .kt-coming-soon__motto {
+    font-size: 10px;
+    gap: 6px 8px;
+  }
+}
