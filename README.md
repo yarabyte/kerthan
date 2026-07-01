@@ -113,6 +113,8 @@ Le projet est prêt pour Vercel (Next.js App Router, page statique, optimisation
 
 ### 2. Variables d'environnement
 
+**Important :** sans `TURSO_DATABASE_URL` sur Vercel, le build passe (contenu par défaut) mais le site et le backoffice ne fonctionneront pas correctement en production. Configurez Turso avant la mise en ligne.
+
 | Variable | Valeur | Environnement |
 |----------|--------|---------------|
 | `NEXT_PUBLIC_SITE_URL` | `https://www.kerthan.org` | Production |

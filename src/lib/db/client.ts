@@ -8,6 +8,16 @@ let db: LibSQLDatabase<typeof schema> | null = null;
 function getDatabaseUrl(): string {
   const url = process.env.TURSO_DATABASE_URL;
   if (url) return url;
+
+  if (!process.env.VERCEL) {
+    return "file:./data/kerthan.db";
+  }
+
+  // Vercel build: DB fichier indisponible — mémoire éphémère pour la génération statique
+  if (process.env.NEXT_PHASE === "phase-production-build") {
+    return ":memory:";
+  }
+
   return "file:./data/kerthan.db";
 }
 

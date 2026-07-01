@@ -85,6 +85,18 @@ function enrichStats(content: SiteContent): SiteContent {
   };
 }
 
+function fallbackContent(): SiteContent {
+  return enrichStats(DEFAULT_SITE_CONTENT);
+}
+
+async function loadScopeSafe(scope: ContentScope): Promise<SiteContent> {
+  try {
+    return await loadScope(scope);
+  } catch {
+    return fallbackContent();
+  }
+}
+
 async function loadScope(scope: ContentScope): Promise<SiteContent> {
   const db = getDb();
 
@@ -119,25 +131,29 @@ async function loadScope(scope: ContentScope): Promise<SiteContent> {
 }
 
 export async function getPublishedContent(): Promise<SiteContent> {
-  return loadScope("published");
+  return loadScopeSafe("published");
 }
 
 export async function getDraftContent(): Promise<SiteContent> {
-  const draft = await loadScope("draft");
-  if (
-    (await getDb().select().from(siteSettings).where(eq(siteSettings.scope, "draft")).limit(1))
-      .length === 0
-  ) {
-    const published = await loadScope("published");
-    const hasPublished =
-      (await getDb()
-        .select()
-        .from(siteSettings)
-        .where(eq(siteSettings.scope, "published"))
-        .limit(1)).length > 0;
-    return hasPublished ? published : draft;
+  try {
+    const draft = await loadScope("draft");
+    if (
+      (await getDb().select().from(siteSettings).where(eq(siteSettings.scope, "draft")).limit(1))
+        .length === 0
+    ) {
+      const published = await loadScope("published");
+      const hasPublished =
+        (await getDb()
+          .select()
+          .from(siteSettings)
+          .where(eq(siteSettings.scope, "published"))
+          .limit(1)).length > 0;
+      return hasPublished ? published : draft;
+    }
+    return draft;
+  } catch {
+    return fallbackContent();
   }
-  return draft;
 }
 
 export async function getMaintenanceMode(): Promise<boolean> {
