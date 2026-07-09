@@ -5,7 +5,4 @@ export async function isMaintenanceMode(): Promise<boolean> {
   return getMaintenanceMode();
 }
 
-/** Sync check for env-only fallback (middleware edge). */
-export function isMaintenanceModeEnv(): boolean {
-  return process.env.MAINTENANCE_MODE === "true";
-}
+export { isMaintenanceModeEnv } from "./maintenance-env";

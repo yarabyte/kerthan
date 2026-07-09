@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import { getIronSession } from "iron-session";
 import type { AdminSession } from "@/lib/auth/session";
 import { ADMIN_SESSION_COOKIE, getSessionOptions } from "@/lib/auth/session";
-import { isMaintenanceModeEnv } from "@/lib/maintenance";
+import { isMaintenanceModeEnv } from "@/lib/maintenance-env";
 
 const ASSET_PATHS = ["/assets", "/icon.png", "/favicon.ico"];
 

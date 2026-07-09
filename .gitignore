@@ -37,9 +37,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# local sqlite
-/data/
-
 # uploaded images (keep folder)
 /public/assets/uploads/*
 !/public/assets/uploads/.gitkeep
+.vercel
+.env*

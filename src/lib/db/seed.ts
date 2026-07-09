@@ -1,11 +1,10 @@
-import { mkdirSync } from "node:fs";
+import "../load-env";
 import { getDb, closeDb } from "./client";
 import { seedDatabase } from "./queries/content";
 
 async function main() {
-  mkdirSync("./data", { recursive: true });
   getDb();
-  console.log("Seeding database…");
+  console.log("Seeding PostgreSQL database…");
   await seedDatabase();
   console.log("Done.");
   await closeDb();

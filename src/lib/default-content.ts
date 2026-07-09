@@ -239,7 +239,7 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
 
 <h2>4. Hébergement</h2>
 <p>Le site est hébergé par :</p>
-<p><strong>Vercel Inc.</strong><br>440 N Barranca Ave #4133<br>Covina, CA 91723, États-Unis<br><a href="https://vercel.com" target="_blank" rel="noopener noreferrer">vercel.com</a></p>
+<p><strong>Yarabyte SARL</strong><br>Infrastructure dédiée (serveur privé)<br><a href="https://www.yarabyte.com" target="_blank" rel="noopener noreferrer">www.yarabyte.com</a></p>
 
 <h2>5. Propriété intellectuelle</h2>
 <p>L'ensemble des éléments composant le site (textes, graphismes, logos, images, structure, etc.) est protégé par le droit de la propriété intellectuelle. Toute reproduction, représentation ou exploitation, totale ou partielle, sans autorisation écrite préalable de la Clinique Kerthan est interdite.</p>

@@ -1,189 +1,123 @@
 # Clinique Kerthan — Site web Next.js
 
-Site vitrine de la **Clinique Kerthan** (Douala, Cameroun), construit avec **Next.js 16** (App Router) à partir du design system fourni.
+Site vitrine de la **Clinique Kerthan** (Douala, Cameroun), construit avec **Next.js 16** (App Router).
 
-## Structure du projet
-
-```
-kerthan/
-├── design-system/          # Template DS original (référence)
-│   ├── components/         # Composants JSX source
-│   ├── tokens/             # Tokens CSS originaux
-│   ├── templates/          # Page HTML prototype
-│   ├── guidelines/         # Spécimens visuels
-│   └── readme.md           # Guide de marque complet
-├── public/
-│   └── assets/             # Logos et visuels (remplacer par les fichiers officiels)
-├── src/
-│   ├── app/                # Routes Next.js (layout, page d'accueil)
-│   ├── components/
-│   │   ├── ui/             # Design system (core, forms, brand)
-│   │   ├── layout/         # TopBar, Header, Footer
-│   │   └── sections/       # Sections de la page d'accueil
-│   ├── lib/                # Contenu, base Turso, auth admin
-│   └── styles/
-│       ├── tokens/         # Tokens CSS actifs
-│       ├── components.css  # Styles des composants UI
-│       └── website.css     # Styles de mise en page
-└── package.json
-```
-
-## Démarrage
+## Démarrage local
 
 ```bash
 npm install
 cp .env.example .env
-npm run db:setup    # Crée la base locale et importe le contenu initial
+# Renseigner DATABASE_URL (PostgreSQL local ou distante)
+npm run db:setup
 npm run dev
 ```
 
 Ouvrir [http://localhost:3000](http://localhost:3000) — backoffice : [http://localhost:3000/admin](http://localhost:3000/admin).
 
-### Backoffice (`/admin`)
+## Backoffice (`/admin`)
 
-Contenu administrable via Turso (SQLite distant) avec workflow **brouillon → Publier**.
+Contenu administrable via **PostgreSQL** avec workflow **brouillon → Publier**.
 
 | Page | Rôle |
 |------|------|
 | `/admin/contenu` | Textes, services, histoire, contact, footer, SEO |
-| `/admin/slider` | Slides hero (ajout / suppression / ordre) |
-| `/admin/blog` | Articles blog + texte de la section accueil |
+| `/admin/slider` | Slides hero |
+| `/admin/blog` | Articles blog |
 | `/admin/equipe` | Fiches médecins |
 | `/admin/demandes` | Historique formulaire contact |
 | `/admin/parametres` | Maintenance + mentions légales |
 | `/admin/preview` | Prévisualisation du brouillon |
 
-**Images** : dans le backoffice, utilisez **Choisir une image** sur tous les champs photo (services, histoire, équipe, slider, SEO). Les fichiers sont enregistrés dans `public/assets/uploads/`.
+## Base de données (PostgreSQL)
 
-### Base de données (Turso)
-
-1. Créer un compte gratuit sur [turso.tech](https://turso.tech)
-2. Créer une base et récupérer `TURSO_DATABASE_URL` + `TURSO_AUTH_TOKEN`
-3. Les ajouter dans `.env` (local) et Vercel (production)
-4. Déployer puis exécuter une fois en local contre la base distante :
+Le projet utilise **uniquement PostgreSQL** via `DATABASE_URL`.
 
 ```bash
-npm run db:push
-npm run db:seed
+npm run db:push   # Appliquer le schéma
+npm run db:seed   # Importer le contenu initial
+npm run db:setup  # Les deux
 ```
-
-Sans Turso en local, la base fichier `./data/kerthan.db` est utilisée automatiquement.
 
 ### Compte admin
 
 ```bash
-# Générer le hash du mot de passe
 npm run admin:hash -- VotreMotDePasse
+```
 
-# Ajouter dans .env :
+Ajouter dans `.env` :
+
+```env
 ADMIN_EMAIL=webmaster@kerthan.org
-ADMIN_PASSWORD_HASH_B64=<valeur générée par npm run admin:hash>
+ADMIN_PASSWORD_HASH_B64=<valeur générée>
 SESSION_SECRET=<chaîne aléatoire 32+ caractères>
 ```
 
-> **Note :** utilisez `ADMIN_PASSWORD_HASH_B64` (pas le hash brut) — Next.js interprète les `$` du bcrypt comme des variables d'environnement.
+## Déploiement sur Coolify
 
-## Assets
+### 1. Créer PostgreSQL dans Coolify
 
-Les fichiers dans `public/assets/` :
+1. **+ New Resource** → **Database** → **PostgreSQL**
+2. Nom : `kerthan-db`
+3. Notez user, mot de passe, nom de base
 
-- `logo-seal.png` — logo officiel 20 ans (en-tête, pied de page)
-- `logo-20-years.png` — même fichier, affiché en grand dans le hero
-- `motif-heartbeat.svg` — motif décoratif (placeholder, à remplacer si besoin)
+### 2. Créer l'application
 
-## Design system
+1. **+ New Resource** → **Application**
+2. Source : GitHub → `yarabyte/kerthan`
+3. Build pack : **Dockerfile** (fichier `Dockerfile` à la racine)
+4. Port : **3000**
 
-Le guide de marque complet (voix, couleurs, typo, iconographie) se trouve dans [`design-system/readme.md`](design-system/readme.md).
+### 3. Lier PostgreSQL à l'application
 
-Les composants React ont été migrés de `design-system/components/` vers `src/components/ui/` avec :
+Dans l'application → **Environment Variables** :
 
-- **lucide-react** à la place de Lucide UMD
-- **next/font** pour Plus Jakarta Sans, Lexend et Caveat
-- CSS global consolidé (plus de `injectStyles()`)
+| Variable | Valeur |
+|----------|--------|
+| `DATABASE_URL` | URL interne Coolify du Postgres (ex. `postgresql://user:pass@kerthan-db:5432/kerthan`) |
+| `NEXT_PUBLIC_SITE_URL` | `https://www.kerthan.org` |
+| `ADMIN_EMAIL` | `webmaster@kerthan.org` |
+| `ADMIN_PASSWORD_HASH_B64` | *(voir `npm run admin:hash`)* |
+| `SESSION_SECRET` | *(32+ caractères aléatoires)* |
+| `SMTP_HOST` | `smtp.siteprotect.com` |
+| `SMTP_PORT` | `587` |
+| `SMTP_USER` | `webmaster@kerthan.org` |
+| `SMTP_PASSWORD` | *(mot de passe SMTP)* |
+| `SMTP_FROM` | `Clinique Kerthan <webmaster@kerthan.org>` |
+| `CONTACT_TO` | `webmaster@kerthan.org` |
+| `MAINTENANCE_MODE` | `false` |
 
-## Déploiement sur Vercel
+Coolify peut injecter `DATABASE_URL` automatiquement si vous **liez** le service PostgreSQL à l'application (bouton **Connect to Database**).
 
-Le projet est prêt pour Vercel (Next.js App Router, page statique, optimisations images/fonts).
+### 4. Volume persistant pour les images uploadées
 
-### 1. Importer le dépôt
+Dans l'application Coolify → **Storages** (Volumes) :
 
-1. [vercel.com/new](https://vercel.com/new) → importer le repo Git
-2. Framework détecté automatiquement : **Next.js**
-3. Build : `next build` · Output : défaut Vercel
+| Chemin conteneur | Description |
+|------------------|-------------|
+| `/app/public/assets/uploads` | Photos uploadées via le backoffice |
 
-### 2. Variables d'environnement
+Sans ce volume, les images uploadées disparaissent au redéploiement.
 
-**Important :** sans `TURSO_DATABASE_URL` sur Vercel, le build passe (contenu par défaut) mais le site et le backoffice ne fonctionneront pas correctement en production. Configurez Turso avant la mise en ligne.
+### 5. Initialiser la base (une fois)
 
-| Variable | Valeur | Environnement |
-|----------|--------|---------------|
-| `NEXT_PUBLIC_SITE_URL` | `https://www.kerthan.org` | Production |
-| `TURSO_DATABASE_URL` | `libsql://...` | Production |
-| `TURSO_AUTH_TOKEN` | *(token Turso)* | Production |
-| `ADMIN_EMAIL` | `webmaster@kerthan.org` | Production |
-| `ADMIN_PASSWORD_HASH_B64` | *(voir `npm run admin:hash`)* | Production |
-| `SESSION_SECRET` | *(32+ caractères aléatoires)* | Production |
-| `MAINTENANCE_MODE` | `true` ou `false` (fallback) | Tous |
-| `SMTP_HOST` | `smtp.siteprotect.com` | Production |
-| `SMTP_PORT` | `587` | Production |
-| `SMTP_USER` | `webmaster@kerthan.org` | Production |
-| `SMTP_PASSWORD` | *(mot de passe SMTP)* | Production |
-| `SMTP_FROM` | `Clinique Kerthan <webmaster@kerthan.org>` | Production |
-| `CONTACT_TO` | `webmaster@kerthan.org` | Production |
+Depuis **votre Mac** (avec l’URL Postgres de Coolify — souvent visible dans le service PostgreSQL → **Connection Details**) :
 
-Sur les previews Vercel, l'URL est déduite de `VERCEL_URL` si la variable n'est pas définie.
-
-### Formulaire de contact (SMTP)
-
-Le formulaire envoie les demandes via `POST /api/contact` et Nodemailer.
-
-1. Renseigner `SMTP_PASSWORD` dans `.env` (local) ou dans Vercel
-2. Redémarrer `npm run dev`
-3. Tester une demande depuis la section **Contact**
-
-```env
-SMTP_HOST=smtp.siteprotect.com
-SMTP_PORT=587
-SMTP_SECURE=false
-SMTP_USER=webmaster@kerthan.org
-SMTP_PASSWORD=votre_mot_de_passe
-CONTACT_TO=webmaster@kerthan.org
+```bash
+DATABASE_URL="postgresql://user:pass@IP-DU-SERVEUR:5432/kerthan" npm run db:setup
 ```
 
-### Mode maintenance
+> L’image Docker de production ne contient pas les outils de migration — l’initialisation se fait une fois en local ou via SSH sur le serveur avec le repo cloné.
 
-Le mode maintenance se gère depuis **Admin → Paramètres** (interrupteur, sans redéployer).
+### 6. Domaine
 
-La variable `MAINTENANCE_MODE=true` reste un **fallback** si la base est indisponible.
-
-### 3. Domaine personnalisé
-
-Dans Vercel → **Settings → Domains** : ajouter `www.kerthan.org` et configurer les DNS chez le registrar.
-
-### 4. Fichiers exclus du déploiement
-
-`.vercelignore` exclut `design-system/` et `uploads/` (référence locale uniquement).
-
-### Optimisations incluses
-
-- Images AVIF/WebP via `next/image`
-- Polices auto-hébergées (`next/font`)
-- `sitemap.xml` et `robots.txt` générés
-- En-têtes de sécurité HTTP
-- Cache long sur `/assets/*`
-- Données structurées Schema.org (clinique médicale)
-- Page d'accueil pré-rendue (statique)
+Coolify → application → **Domains** → ajouter `www.kerthan.org` et configurer les DNS.
 
 ## Scripts
 
-| Commande           | Description              |
-|--------------------|--------------------------|
-| `npm run dev`      | Serveur de développement |
-| `npm run build`    | Build de production      |
-| `npm run start`    | Serveur de production    |
-| `npm run lint`     | ESLint                   |
-| `npm run typecheck`| Vérification TypeScript  |
-| `npm run db:push`  | Appliquer le schéma DB     |
-| `npm run db:seed`   | Importer le contenu initial|
-| `npm run db:setup`  | `db:push` + `db:seed`      |
-| `npm run admin:hash`| Hash bcrypt mot de passe   |
+| Commande | Description |
+|----------|-------------|
+| `npm run dev` | Serveur de développement |
+| `npm run build` | Build de production |
+| `npm run start` | Serveur de production |
+| `npm run db:setup` | Schéma + contenu initial |
+| `npm run admin:hash` | Hash bcrypt mot de passe |

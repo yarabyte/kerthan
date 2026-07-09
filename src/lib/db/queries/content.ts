@@ -363,5 +363,5 @@ export async function countUnreadSubmissions(): Promise<number> {
     .select({ count: sql<number>`count(*)` })
     .from(contactSubmissions)
     .where(isNull(contactSubmissions.readAt));
-  return rows[0]?.count ?? 0;
+  return Number(rows[0]?.count ?? 0);
 }
